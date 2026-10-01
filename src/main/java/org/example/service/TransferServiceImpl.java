@@ -1,5 +1,7 @@
 package org.example.service;
 
+import org.example.exceptions.AccountNotFoundException;
+import org.example.exceptions.InsufficientFundException;
 import org.example.model.Account;
 import org.example.model.Transaction;
 import org.example.repository.AccountRepository;
@@ -14,11 +16,14 @@ public class TransferServiceImpl  implements TransferService{
         this.accountRepository = accountRepository;
     }    @Override
     public Transaction transfer(String fromId, String toId, double amount) {
-
-        Account fromAcc=accountRepository.findById(fromId);
-        Account toAcc=accountRepository.findById(toId);
-        makePayment(fromAcc,toAcc,amount);
-        return Transaction.success(fromId,toId,amount);
+try {
+    Account fromAcc = accountRepository.findById(fromId);
+    Account toAcc = accountRepository.findById(toId);
+    makePayment(fromAcc, toAcc, amount);
+    return Transaction.success(fromId, toId, amount);
+}catch (InsufficientFundException | AccountNotFoundException e) {
+    return Transaction.failed(fromId, toId, amount, e.getMessage());
+}
     }
 
     public void makePayment(Account accountFrom,Account accountTo,double amount){
