@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.exceptions.AccountNotFoundException;
+import org.example.exceptions.TransactionNotFoundException;
 import org.example.model.Account;
 import org.example.model.Transaction;
 
@@ -16,7 +17,7 @@ public class TransactionRepositoryImpl implements TransactionRepository{
     @Override
     public Transaction findById(String id) {
         Transaction t = store.get(id);
-        if (t == null) throw new AccountNotFoundException(id);
+        if (t == null) throw new TransactionNotFoundException(id);
         return t;
     }
 

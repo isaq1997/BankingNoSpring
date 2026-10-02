@@ -8,6 +8,7 @@ import org.example.repository.AccountRepository;
 import org.example.repository.AccountRepositoryImpl;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class TransferServiceImpl  implements TransferService{
     private final AccountRepository accountRepository;
@@ -17,6 +18,9 @@ public class TransferServiceImpl  implements TransferService{
     }    @Override
     public Transaction transfer(String fromId, String toId, BigDecimal amount) {
 try {
+    if (Objects.equals(fromId, toId)) {
+        throw new IllegalArgumentException("Cannot transfer to the same account");
+    }
     Account fromAcc = accountRepository.findById(fromId);
     Account toAcc = accountRepository.findById(toId);
     makePayment(fromAcc, toAcc, amount);
