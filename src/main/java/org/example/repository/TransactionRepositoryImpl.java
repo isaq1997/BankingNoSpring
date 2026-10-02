@@ -21,7 +21,9 @@ public class TransactionRepositoryImpl implements TransactionRepository{
         return t;
     }
 
-    @Override public Collection<Transaction> findAll() { return store.values(); }
+    @Override public Collection<Transaction> findAll() {
+        return List.copyOf(store.values());
+    }
 
     @Override
     public void save(Transaction transaction)

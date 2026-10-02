@@ -4,6 +4,7 @@ import org.example.exceptions.AccountNotFoundException;
 import org.example.model.Account;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,5 +21,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         return a;
     }
 
-    @Override public Collection<Account> findAll() { return store.values(); }
+    @Override public Collection<Account> findAll() {
+        return List.copyOf(store.values());
+    }
 }
