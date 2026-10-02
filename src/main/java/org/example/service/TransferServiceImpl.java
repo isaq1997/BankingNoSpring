@@ -15,7 +15,7 @@ public class TransferServiceImpl  implements TransferService{
     public TransferServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }    @Override
-    public Transaction transfer(String fromId, String toId, double amount) {
+    public Transaction transfer(String fromId, String toId, BigDecimal amount) {
 try {
     Account fromAcc = accountRepository.findById(fromId);
     Account toAcc = accountRepository.findById(toId);
@@ -26,7 +26,7 @@ try {
 }
     }
 
-    public void makePayment(Account accountFrom,Account accountTo,double amount){
+    public void makePayment(Account accountFrom,Account accountTo,BigDecimal amount){
         accountFrom.withdraw(amount);
         accountTo.deposit(amount);
     }
